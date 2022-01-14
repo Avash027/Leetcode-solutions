@@ -1,5 +1,5 @@
 # Palindromic patitioning
-## Hard 
+##  Hard 
 <div class="problem-statement">
                 <p></p><p><span style="font-size:18px">Given a string <strong>str</strong>,&nbsp;a partitioning of the string is a&nbsp;<em>palindrome partitioning</em>&nbsp;if every sub-string of the partition is a palindrome.&nbsp;Determine the fewest cuts needed for palindrome partitioning of&nbsp;given string.</span></p>
 

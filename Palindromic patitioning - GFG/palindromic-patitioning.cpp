@@ -21,26 +21,28 @@ public:
     int palindromicPartition(string str)
     {
         int n = str.size();
-        int dp[n];
-        fill(dp , dp+n , INF);
+        bool dp[n][n];
         
-        for(int i = 0;i<n;i++)
-        {
-            if(isPal(str.substr(0,i+1))){
-                dp[i]=1;
-                continue;
+        int ans[n];
+        
+        for(int i = 0;i<n;i++) for(int j = 0;j<n;j++) dp[i][j] = 0;
+        
+        for(int i = 0;i<n;i++){
+            int temp_min = i;
+            
+            for(int j = 0;j<=i;j++){
+                
+                dp[j][i] = (str[i] == str[j]) and(i-j<2 or dp[j+1][i-1]);
+                
+                if(dp[j][i])
+                    temp_min = min(temp_min , ((j==0)?0:ans[j-1]+1));
+                
             }
             
-            for(int j = i-1;j>=0;j--)
-            {
-                if(dp[j] and isPal(str.substr(j+1,i-j)))
-                    dp[i] = min(dp[i] , dp[j]+1);
-            }
-        }
-
+            ans[i] = temp_min;
+        }        
         
-        return dp[n-1]==INF?0:dp[n-1]-1;
-
+            return ans[n-1];
     }
 };
 

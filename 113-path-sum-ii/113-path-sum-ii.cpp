@@ -15,23 +15,20 @@ private:
     
     void genPath(TreeNode* root , int sum , int target , vector<int> path){
         if(root == NULL) return;
+        
+         
+        path.push_back(root->val);
+        sum+=root->val;
 
-        
-        
-        
-        
         if(root->left == root->right){
             
-            if(root->val + sum == target){
-                path.push_back(root->val);
+            if(sum == target){
                 ans.push_back(path);
             }
             return ;
         }
         
-        
-        path.push_back(root->val);
-        sum+=root->val;
+       
         
         genPath(root->left , sum , target , path);
         genPath(root->right , sum , target,path);

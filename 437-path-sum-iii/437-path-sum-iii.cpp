@@ -12,32 +12,28 @@
 class Solution {
 private:
     int ans;
-    long long target;
+    int target;
+    unordered_map<int,int> umpp;
     
-    void findPath(TreeNode* root , long long sum){
+    void iterate(TreeNode* root , int sum = 0){
         if(root == NULL) return;
         
         sum+=root->val;
-        if(sum == target) ans++;
         
-        findPath(root->left , sum);
-        findPath(root->right , sum);
+        ans+=umpp[sum - target];
+        umpp[sum]++;
         
+        iterate(root->left , sum);
+        iterate(root->right , sum);
+        umpp[sum]--;
     }
     
-    void iterate(TreeNode* root){
-        if(!root) return;
-        
-        findPath(root , 0LL);
-        
-        iterate(root->right);
-        iterate(root->left);
-        
-    }
+   
 public:
     int pathSum(TreeNode* root, int targetSum) {
         ans = 0;
         target = targetSum;
+        umpp[0]=1;//for the root node
         iterate(root);
         return ans;
     }

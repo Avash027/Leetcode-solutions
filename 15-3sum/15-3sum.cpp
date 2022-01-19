@@ -22,9 +22,9 @@ public:
                     while(j<k and nums[j] == ans.back()[1]) j++;
                     while(k>j and nums[k] == ans.back()[2]) k--;
                 }
-                while(i<n-1 and nums[i] == nums[i+1]) i++;
+                
             }
-            
+            while(i<n-1 and nums[i] == nums[i+1]) i++;
             
         }
         

@@ -1,0 +1,1 @@
+https://leetcode.com/problems/gas-station/discuss/42568/Share-some-of-my-ideas./40996

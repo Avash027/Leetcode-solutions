@@ -1,8 +1,5 @@
 class Solution {
 private:
-    inline bool isSquare(int n){
-        return ceil(sqrt(n)) == floor(sqrt(n));
-    }
 public:
     bool winnerSquareGame(int n) {
         bool dp[n+1];

@@ -3,10 +3,7 @@ private:
  
     unordered_map<string,bool> in; 
     unordered_map<string,int> dis;
-  
-    
-  
-    
+
     void bfs(string src){
        
         queue<string> q;
@@ -39,12 +36,7 @@ private:
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         for(auto&e:wordList) in[e] = true;
-        
-        
         bfs(beginWord);
-        
-        
-        
         return dis[endWord];
     }
 };

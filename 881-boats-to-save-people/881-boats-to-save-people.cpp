@@ -7,10 +7,10 @@ public:
         int i = 0 , j = n-1 , ans = 0;
         
         while(i<=j){
-            if(arr[i] + arr[j]>limit)
-                j-- , ans++;
-            else
-                j-- , i++ , ans++;
+            if(arr[i] + arr[j]<=limit)
+                i++;
+            j--;
+            ans++;
         }
         
         return ans;

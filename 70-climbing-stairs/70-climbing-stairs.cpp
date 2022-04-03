@@ -1,6 +1,6 @@
 class Solution {
 private:
-    
+    //top down approach
     int numOfWays(int n,vector<int>&dp){
         if(n == 0 or n == 1)
             return 1;
@@ -10,7 +10,14 @@ private:
     
 public:
     int climbStairs(int n) {
-        vector<int> dp(n+1 , -1);
-        return numOfWays(n,dp);
+        int p0 = 1 , p1 = 1,ans =1;
+        
+        for(int i = 2;i<=n;i++){
+            ans = p0 + p1;
+            p0=p1;
+            p1=ans;
+        }
+        
+        return ans;
     }
 };

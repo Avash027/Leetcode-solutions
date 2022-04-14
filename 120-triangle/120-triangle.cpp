@@ -1,33 +1,25 @@
 constexpr int INF = 1000000;
 
 class Solution {
-private:
-    
-    int minPathSum(vector<vector<int>>& arr
-                   ,int row
-                   ,int cur
-                   ,vector<vector<int>>& dp){
-        
-        if(row>=arr.size())
-            return INF;
-        
-        if(cur >= arr[row].size() or cur<0)
-            return INF;
-        
-        if(row == arr.size()-1)
-            return arr[row][cur];
-        
-        if(dp[row][cur]!=-1) return dp[row][cur];
-        
-        return dp[row][cur] = arr[row][cur] +  min(minPathSum(arr,row+1,cur,dp) , minPathSum(arr,row+1,cur+1,dp));
-    }
+
 public:
     int minimumTotal(vector<vector<int>>& triangle) {
-        
+        vector<int> prev(1 , triangle[0][0]);
         const int n = triangle.size();
         
-        vector<vector<int>> dp(n , vector<int>(n,-1));
+        for(int i = 1;i<n;i++){
+            vector<int> cur(prev.size()+1 , INF);
+            
+            for(int j = 0;j<triangle[i].size();j++){
+                if(j<prev.size()) cur[j] = triangle[i][j] +  prev[j];
+                if(j-1>=0) cur[j] = min(cur[j] , triangle[i][j] +  prev[j-1]);
+            }
+            
+            prev = cur;
+                
+        }
         
-        return minPathSum(triangle , 0 , 0,dp);
+        return *min_element(begin(prev),end(prev));
+    
     }
 };

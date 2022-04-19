@@ -10,21 +10,15 @@
  * };
  */
 class Solution {
-    private:
-    bool deleteLeaf(TreeNode*& root , int target){
-        if(root == NULL) return true;
-        
-        bool left = deleteLeaf(root->left , target);
-        bool right = deleteLeaf(root->right , target);
-        
-        if(root->val == target and left and right)
-            root = NULL;
-        
-        return root == NULL;
-    }
+  
 public:
     TreeNode* removeLeafNodes(TreeNode* root, int target) {
-        deleteLeaf(root , target);
-        return root;
+        if(root->left)
+            root->left = removeLeafNodes(root->left ,target);
+        
+        if(root->right)
+            root->right = removeLeafNodes(root->right , target);
+        
+        return (root->left == root->right and root->val == target)?NULL:root;
     }
 };

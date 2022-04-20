@@ -11,42 +11,30 @@
  */
 class BSTIterator {
 private:
-    TreeNode* flatRoot;
+    stack<TreeNode*> st;
     
-    void inorder(TreeNode* root , TreeNode*& temp){
-        if(!root) return;
-        
-        inorder(root->left,temp);
-        
-        temp->left = NULL;
-        temp->right = new TreeNode(root->val);
-        temp = temp->right;
-        
-        inorder(root->right,temp);
+    void insert(TreeNode* root){
+        while(root){
+            st.push(root);
+            root = root->left;
+        }
     }
-    
+ 
 public:
     BSTIterator(TreeNode* root) {
-        TreeNode* temp = new TreeNode(-1);
-         flatRoot = temp;
-        
-        inorder(root , flatRoot);
-        flatRoot->left = NULL;
-        flatRoot->right = NULL;
-        
-        flatRoot = temp->right;
+        insert(root);
  
     }
     
     int next() {
-        int val = flatRoot->val;
-        flatRoot = flatRoot->right;
-        
-        return val;
+        TreeNode* tmp = st.top();
+        st.pop();
+        insert(tmp->right);
+        return tmp->val;
     }
     
     bool hasNext() {
-        return flatRoot;
+        return st.size();
     }
 };
 

@@ -11,27 +11,27 @@
  */
 class Solution {
 private:
-vector<int> ls;
-int i = 0;
+    TreeNode *prev = NULL , *f = NULL , *s = NULL;
     
- void inOrder(TreeNode* root){
-     if(!root) return;
-     inOrder(root->left);
-     ls.push_back(root->val);
-     inOrder(root->right);
- }
-    
-  void inOrder1(TreeNode* root){
-      if(!root) return;
-      inOrder1(root->left);
-      root->val = ls[i++];
-      inOrder1(root->right);
-  }
+    void inorder(TreeNode* root){
+        if(!root) return;
+        inorder(root->left);
+        
+        if(prev){
+            if(prev->val > root->val){
+                if(f == NULL) f = prev , s = root;
+                else s = root;
+            }
+        }
+            
+        prev = root;
+        
+        inorder(root->right);
+    }
     
 public:
     void recoverTree(TreeNode* root) {
-        inOrder(root);
-        sort(begin(ls),end(ls));
-        inOrder1(root);
+        inorder(root);
+        swap(f->val , s->val);
     }
 };

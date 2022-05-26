@@ -27,23 +27,23 @@ public:
         
         int dp[n+1][2][3];
         
-        for(int i = 0;i<n;i++)
-            for(int j = 0;j<2;j++)
-                dp[i][j][0] = 0; // i is ind and j is canBuy and 0 in numOfTr
+        vector<vector<int>> cur(2 , vector<int>(3,0));
+        vector<vector<int>> nxt(2 , vector<int>(3,0));
+       
         
-        for(int i = 0;i<2;i++)
-            for(int j = 0;j<3;j++)
-                dp[n][i][j] = 0;
-        
-        for(int i = n-1;i>=0;i--)
-            for(int canBuy = 0;canBuy<2;canBuy++)
+        for(int i = n-1;i>=0;i--){
+            for(int canBuy = 0;canBuy<2;canBuy++){
                 for(int numOfTr = 1;numOfTr <= 2;numOfTr++){
                     if(canBuy)
-                        dp[i][canBuy][numOfTr] = max(-prices[i] + dp[i+1][0][numOfTr], dp[i+1][1][numOfTr]);
+                        cur[canBuy][numOfTr] = max(-prices[i] + nxt[0][numOfTr], nxt[1][numOfTr]);
                      else 
-                        dp[i][canBuy][numOfTr] = max(prices[i] + dp[i+1][1][numOfTr-1], dp[i+1][0][numOfTr]);
+                        cur[canBuy][numOfTr] = max(prices[i] + nxt[1][numOfTr-1], nxt[0][numOfTr]);
                 }
+            }
+            
+            nxt = cur;
+        }
         
-        return dp[0][1][2];
+        return nxt[1][2];
     }
 };

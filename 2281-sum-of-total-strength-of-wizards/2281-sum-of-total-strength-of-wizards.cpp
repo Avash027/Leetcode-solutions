@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/sum-of-total-strength-of-wizards/discuss/2062017/C%2B%2B-prefix-%2B-monotonic-stack-O(N)-solution-with-thought-process
+
 constexpr long long MOD = 1000000007;
 
 class Solution {

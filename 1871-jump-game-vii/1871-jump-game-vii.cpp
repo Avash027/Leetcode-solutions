@@ -1,8 +1,8 @@
 class Solution {
 public:
     bool canReach(string s, int minJump, int maxJump) {
-        unordered_map<int,int> limits;
         const int N = s.size();
+        vector<int> limits(2*N+1 , 0);
         int can_reach = 0;
         
         

@@ -3,7 +3,7 @@ class Solution {
     
     
     bool findValue(const vector<int>&arr , int target){
-        ios::sync_with_stdio(0);
+
         int lo = 0 , hi = (int)arr.size()-1;
         
         while(lo<=hi)
@@ -17,6 +17,7 @@ class Solution {
     }
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
+                ios::sync_with_stdio(0);
         for(int i = 0;i<(int)matrix.size();i++)
             if(findValue(matrix[i] , target)) return true;
         

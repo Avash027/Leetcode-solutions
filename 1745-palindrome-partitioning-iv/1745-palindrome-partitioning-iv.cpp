@@ -1,60 +1,32 @@
 class Solution {
-private:
-    
-    bool dp[2010][4];
-    
-    bool isPal(const string&s , int l , int r){
-        while(l<r) 
-            if(s[l++] != s[r--])
-                return false;
-        
-        return true;
-    }
-    
-    
-//     bool check(string&s , int l,int cnt = 0){
-    
-//         if(cnt>3)
-//             return false;
-        
-//         if(l == s.size()){
-//             return cnt == 3;
-//         }
-        
-//         if(dp[l][cnt]!=-1)
-//             return dp[l][cnt];
-        
-//         bool ans = false;
-        
-//         for(int i = l;i<s.size();i++)
-//             if(isPal(s , l , i))
-//                 ans |= check(s , i+1,cnt+1);
-        
-//         return dp[l][cnt] = ans;
-//     }
-    
 public:
     bool checkPartitioning(string s) {
-        memset(dp,false,sizeof(dp));
         const int N = s.size();
+        bool dp[N+1][N+1];
+        memset(dp,false,sizeof(dp));
         
-        for(int i = 0;i<N;i++)
-            for(int j = i;j>=0;j--){
-                if(!isPal(s,j,i)) continue;
+        
+        for(int i = 0;i<N;i++) dp[i][i] = true;
+        for(int i = 0;i<N-1;i++) dp[i][i+1]= (s[i] == s[i+1]);
+        
+        
+        for(int len = 3;len<=N;len++)
+            for(int i = 0;i<N - len+1;i++){
+                int j = i + len-1;
                 
-                if(j == 0){
-                    dp[i][1] = true;
-                    continue;
-                }
-                
-                for(int k = 1;k<=2;k++)
-                    if(dp[j-1][k])
-                        dp[i][k+1] = true;
+                dp[i][j] = dp[i+1][j-1] and (s[i]==s[j]);
                 
             }
         
-
         
-        return dp[N-1][3];
+        for(int i = 1;i<N;i++)
+            for(int j = i+1;j<N;j++){
+                if(dp[0][i-1] and dp[i][j-1] and dp[j][N-1])
+                    return true;
+            }
+        
+        return false;
+        
+        
     }
 };

@@ -1,4 +1,4 @@
-// Time Complexity: O(NlogN)
+// Time Complexity: O(N)
 // Space Complexity: O(N)
 
 class Solution {
@@ -10,9 +10,11 @@ public:
 
         
         // store the elements in the order [yi - xi , xi]
-        priority_queue<pair<int,int>> pq;
+        //In monotonic dqueue
+        deque<pair<int,int>> dq;
         
-        pq.push(
+        
+        dq.push_back(
         make_pair(points[0][1] - points[0][0] , points[0][0])
         );
         
@@ -21,13 +23,17 @@ public:
         for(int i = 1;i<N;i++){
             auto e = points[i];
             
-            while(!pq.empty() and abs(e[0] - pq.top().second) > k)
-                pq.pop();
+            while(!dq.empty() and abs(e[0] - dq.front().second) > k)
+                dq.pop_front();
             
-            if(!pq.empty()) 
-                ans = max(ans , e[0] + e[1] + pq.top().first);
+            if(!dq.empty()) 
+                ans = max(ans , e[0] + e[1] + dq.front().first);
             
-            pq.push(make_pair(e[1] - e[0] , e[0]));
+            while(!dq.empty() and e[1] - e[0] > dq.back().first)
+                dq.pop_back();
+            
+            dq.push_back({e[1] - e[0] , e[0]});
+            
         }
         
         return ans;

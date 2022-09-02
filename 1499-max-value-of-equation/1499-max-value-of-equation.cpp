@@ -1,3 +1,6 @@
+// Time Complexity: O(NlogN)
+// Space Complexity: O(N)
+
 class Solution {
 public:
     int findMaxValueOfEquation(vector<vector<int>>& points, int k) {

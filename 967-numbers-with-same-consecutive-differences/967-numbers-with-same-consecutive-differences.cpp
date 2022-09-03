@@ -1,26 +1,32 @@
 class Solution {
 private:
-    vector<int> ans;
     
-    void calculate(int num,  int k, int n){
-        if(num!=0 and floor(log10(num)+1) == n){
-            ans.push_back(num);
-            return;
-        }
-        
-        int lastDigit = num%10;
-        
-        for(int i = 0;i<=9;i++)
-            if(abs(lastDigit - i)==k)
-                calculate((num*10)+i , k , n);
+    inline int len(int& num){
+        return floor(log10(num)+1);
     }
+
     
 public:
     vector<int> numsSameConsecDiff(int n, int k) {
-        //This is to handle leading zero case
-        for(int i = 1;i<=9;i++)
-            calculate(i,k,n);
+        queue<int> q;
+        vector<int> ans;
         
+        for(int i = 1;i<=9;i++)
+            q.push(i);
+        
+        while(!q.empty()){
+            int num = q.front();
+            q.pop();
+            
+            if(len(num) == n){
+                ans.push_back(num);
+                continue;
+            }
+            
+            for(int i = 0;i<=9;i++)
+                if(abs(i - num%10) == k)
+                    q.push(num*10 + i);
+        }
         return ans;
     }
 };

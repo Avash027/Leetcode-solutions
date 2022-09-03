@@ -17,6 +17,7 @@ private:
     
 public:
     vector<int> numsSameConsecDiff(int n, int k) {
+        //This is to handle leading zero case
         for(int i = 1;i<=9;i++)
             calculate(i,k,n);
         

@@ -5,18 +5,21 @@ public:
     long long maxAlternatingSum(vector<int>& nums) {
         const int N = nums.size();
         
-        vector<vector<long long>> dp(N , vector<long long>(2 , 0));
+        long long prev_ev= nums[0],prev_od = -INF;
         
-        dp[0][0] = nums[0];
-        dp[0][1] = -INF;
+        
         
         
         for(int i = 1;i<N;i++){
-            dp[i][0] = max({1LL*nums[i], dp[i-1][1] + nums[i],dp[i-1][0]});
-            dp[i][1] = max({dp[i-1][1], -nums[i]+dp[i-1][0]});
+            long long cur_ev = max({1LL*nums[i], prev_od + nums[i],prev_ev});
+            long long cur_od = max({prev_od, -nums[i]+prev_ev});
+            
+            prev_ev = cur_ev;
+            prev_od = cur_od;
+            
         }
         
-        return max(dp[N-1][0] , dp[N-1][1]);
+        return max(prev_ev , prev_od);
         
         
     }

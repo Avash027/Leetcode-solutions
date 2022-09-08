@@ -1,8 +1,8 @@
 class Solution {
 public:
     vector<int> restoreArray(vector<vector<int>>& adjacentPairs) {
-        unordered_map<int,vector<int>> graph;
-        unordered_map<int,bool> vis;
+        map<int,vector<int>> graph;
+        map<int,bool> vis;
         
         for(auto&pair:adjacentPairs){
             graph[pair[0]].push_back(pair[1]);

@@ -19,7 +19,7 @@ public:
             int ind_c = *ls[2].lower_bound(i);
             
             if(max({ind_a,ind_b,ind_c})>N)
-                continue;
+                break;
             
             ans += N - max({ind_a,ind_b,ind_c});
         }

@@ -10,47 +10,36 @@
  * };
  */
 class Solution {
-private:    
-    bool isPal(vector<int>&freq){
-        int cntOdd = 0;
-        for(auto&e:freq) cntOdd += (e&1);
-        
-        return cntOdd<=1;
-    }
 public:
     int pseudoPalindromicPaths (TreeNode* root) {
         
-        queue<pair<TreeNode*, vector<int>>> q;
-        vector<int> temp(10 , 0);
-        temp[root->val]++;
-        
+        queue<pair<TreeNode*, int>> q;
         int ans = 0;
         
-        q.push({root,temp});
+        q.push({root,1<<(root->val)});
         
         while(!q.empty()){
             TreeNode* cur = q.front().first;
-            vector<int> freq =q.front().second;
+            int mask = q.front().second;
             q.pop();
             
             bool isLeaf = true;
             
             if(cur->left){
                 isLeaf = false;
-                freq[cur->left->val]++;
-                q.push({cur->left, freq});
-                freq[cur->left->val]--;
+                q.push({cur->left,mask^(1<<(cur->left->val))});
+                
             } 
             
             if(cur->right) {
                 isLeaf = false;
-                freq[cur->right->val]++;
-                q.push({cur->right,freq});
-                freq[cur->right->val]--;
+                q.push({cur->right,mask^(1<<(cur->right->val))});
+
             }
             
             if(isLeaf){
-                ans += isPal(freq);
+                cout<<mask<<"\n";
+                ans += __builtin_popcount(mask)<=1;
             }
         }
         

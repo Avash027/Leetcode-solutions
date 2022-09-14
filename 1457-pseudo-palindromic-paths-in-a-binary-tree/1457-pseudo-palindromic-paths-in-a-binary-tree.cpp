@@ -10,40 +10,26 @@
  * };
  */
 class Solution {
+private:
+   int dfs(TreeNode* root, int mask){
+        if(root == NULL)
+            return 0;
+    
+        mask^=(1<<root->val);
+       
+         if(root->left == root->right){
+            return __builtin_popcount(mask)<=1;
+        }
+       
+        int cntLeft = dfs(root->left, mask);
+        int cntRight = dfs(root->right, mask);
+        
+        return cntLeft + cntRight;
+    }
+    
 public:
     int pseudoPalindromicPaths (TreeNode* root) {
-        
-        queue<pair<TreeNode*, int>> q;
-        int ans = 0;
-        
-        q.push({root,1<<(root->val)});
-        
-        while(!q.empty()){
-            TreeNode* cur = q.front().first;
-            int mask = q.front().second;
-            q.pop();
-            
-            bool isLeaf = true;
-            
-            if(cur->left){
-                isLeaf = false;
-                q.push({cur->left,mask^(1<<(cur->left->val))});
-                
-            } 
-            
-            if(cur->right) {
-                isLeaf = false;
-                q.push({cur->right,mask^(1<<(cur->right->val))});
-
-            }
-            
-            if(isLeaf){
-                cout<<mask<<"\n";
-                ans += __builtin_popcount(mask)<=1;
-            }
-        }
-        
-        return ans;
-        
+       
+        return dfs(root,0);
     }
 };

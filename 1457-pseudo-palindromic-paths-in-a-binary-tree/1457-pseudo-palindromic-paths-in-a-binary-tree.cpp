@@ -10,38 +10,51 @@
  * };
  */
 class Solution {
-private:
-    
+private:    
     bool isPal(vector<int>&freq){
         int cntOdd = 0;
         for(auto&e:freq) cntOdd += (e&1);
         
         return cntOdd<=1;
     }
-    
-    int dfs(TreeNode* root, vector<int>& freq){
-        if(root == NULL)
-            return 0;
-        
-        if(root->left == root->right){
-            freq[root->val]++;
-            int cnt = isPal(freq);
-            freq[root->val]--;
-            return cnt;
-        }
-        
-        freq[root->val]++;
-        int cntLeft = dfs(root->left, freq);
-        int cntRight = dfs(root->right, freq);
-        freq[root->val]--;
-        
-        return cntLeft + cntRight;
-    }
-    
 public:
     int pseudoPalindromicPaths (TreeNode* root) {
-        vector<int> freq(10,0);
         
-        return dfs(root,freq);
+        queue<pair<TreeNode*, vector<int>>> q;
+        vector<int> temp(10 , 0);
+        temp[root->val]++;
+        
+        int ans = 0;
+        
+        q.push({root,temp});
+        
+        while(!q.empty()){
+            TreeNode* cur = q.front().first;
+            vector<int> freq =q.front().second;
+            q.pop();
+            
+            bool isLeaf = true;
+            
+            if(cur->left){
+                isLeaf = false;
+                freq[cur->left->val]++;
+                q.push({cur->left, freq});
+                freq[cur->left->val]--;
+            } 
+            
+            if(cur->right) {
+                isLeaf = false;
+                freq[cur->right->val]++;
+                q.push({cur->right,freq});
+                freq[cur->right->val]--;
+            }
+            
+            if(isLeaf){
+                ans += isPal(freq);
+            }
+        }
+        
+        return ans;
+        
     }
 };
